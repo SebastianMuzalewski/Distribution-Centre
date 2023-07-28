@@ -34,7 +34,6 @@
             align-items: center;
             display: flex;
         }
-
         .nav-link {
             background-color: #333;
             color: #FFFFFF;
@@ -97,8 +96,17 @@
             <a class="nav-link" th:href="@{/home}">
                 <img th:src="@{/images/pngs/navbar/home.png}" alt="Home Navbar Icon" class="nav-icon-resizer" /> HOME
             </a>
+            <a class="nav-link" th:href="@{login}" th:unless="${hasRoleAdmin || hasRoleEmp || hasRoleUser}">
+                <img th:src="@{/images/pngs/navbar/login.png}" alt="Home Navbar Icon" class="nav-icon-resizer" th:if="${userRole == null or userRole == 'ROLE_ANONYMOUS'}" /> LOGIN
+            </a>
+            <a class="nav-link" th:if="${hasRoleAdmin || hasRoleEmp || hasRoleUser}" th:href="@{/profile}" >
+                <img th:src="@{/images/pngs/navbar/profile.png}" alt="Home Navbar Icon" class="nav-icon-resizer" th:unless="${userRole == null or userRole == 'ROLE_ANONYMOUS'}" /> <span th:text="${username} "></span>
+            </a>
             <a class="nav-link" th:href="@{/about}">
                 <img th:src="@{/images/pngs/navbar/about.png}" alt="About Navbar Icon" class="nav-icon-resizer" /> ABOUT
+            </a>
+            <a class="nav-link" th:href="@{/logout}" th:if="${hasRoleAdmin || hasRoleEmp || hasRoleUser}">
+                <img th:src="@{/images/pngs/navbar/logout.png}" alt="About Navbar Icon" class="nav-icon-resizer" th:unless="${userRole == null or userRole == 'ROLE_ANONYMOUS'}"/> LOGOUT
             </a>
         </div>
     </div>

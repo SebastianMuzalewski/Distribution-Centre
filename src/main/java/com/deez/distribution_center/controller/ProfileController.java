@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/about")
-public class AboutController {
+@RequestMapping("/profile")
+public class ProfileController {
     @GetMapping
-    public String about(Model model) {
+    public String profile(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         boolean hasRoleAdmin = authentication != null && authentication.getAuthorities().stream()
@@ -35,6 +35,6 @@ public class AboutController {
         model.addAttribute("userRole", userRole);
         model.addAttribute("username", username);
 
-        return "about";
+        return "profile";
     }
 }
