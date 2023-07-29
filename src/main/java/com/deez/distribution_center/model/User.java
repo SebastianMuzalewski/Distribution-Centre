@@ -28,6 +28,7 @@ public class User implements UserDetails{
     private Long id;
     private String username;
     private String password;
+    private String imageUrl;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -45,6 +46,10 @@ public class User implements UserDetails{
     @Override
     public String getUsername(){
         return username;
+    }
+
+    public String getImageUrl(){
+        return imageUrl;
     }
     @Override
     public boolean isAccountNonExpired(){

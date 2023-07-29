@@ -85,6 +85,14 @@
             top: -75%;
             left: 22%;
         }
+        .profile-image-fixed {
+            width: 20%;
+            height: 40%;
+            border-radius: 50%;
+            border: 3px solid #de2500;
+            top: -75%;
+            left: 22%;
+        }
         .display-information{
            display: flex;
             justify-content: center;
@@ -180,7 +188,8 @@
 </div>
     <body>
         <span class="display-profile">
-            <img th:src="@{/images/pngs/profile/no-profile.png}" alt="Avatar" class="profile-image"/>
+            <img th:if="${imageUrl != ''}" th:src="${imageUrl}" alt="Avatar" class="profile-image profile-image-fixed" />
+            <img th:if="${imageUrl == ''}" th:src="@{/images/pngs/profile/no-profile.png}" alt="Avatar" class="profile-image" />
         </span>
             <div class="center-line"></div>
         <div class="display-information">
