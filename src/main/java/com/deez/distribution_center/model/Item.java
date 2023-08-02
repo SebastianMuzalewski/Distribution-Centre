@@ -38,7 +38,9 @@ public class Item {
     public enum Brand {
         BALENCIAGA("Balenciaga"),
         STONE_ISLAND("Stone Island"),
-        DIOR("Dior");
+        DIOR("Dior"),
+
+        GUCCI("Gucci");
 
         private String title;
 
