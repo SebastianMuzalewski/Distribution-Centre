@@ -92,8 +92,37 @@ public class DistributionCenterController {
     }
 
     @PostMapping("/delete")
-    public String deleteItem(@RequestParam("id") Long itemId) {
-        dbcRepository.deleteById(itemId);
+    public String deleteItem(@RequestParam("id") Long centerId) {
+        dbcRepository.deleteById(centerId);
         return "redirect:/distribution-centers";
+    }
+
+    @GetMapping("/details/{id}")
+    public String showCenterDetails(@PathVariable("id") Long centerId, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean hasRoleAdmin = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+        model.addAttribute("hasRoleAdmin", hasRoleAdmin);
+
+        boolean hasRoleEmp = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_EMPLOYEE"));
+        model.addAttribute("hasRoleEmp", hasRoleEmp);
+
+        boolean hasRoleUser = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_USER"));
+        model.addAttribute("hasRoleUser", hasRoleUser);
+
+        String userRole = null;
+        String username = null;
+        if (authentication != null && !authentication.getAuthorities().isEmpty()) {
+            userRole = authentication.getAuthorities().iterator().next().getAuthority();
+            username = authentication.getName();
+        }
+        model.addAttribute("userRole", userRole);
+        model.addAttribute("username", username);
+        var center = dbcRepository.findById(centerId);
+        center.ifPresent(c -> model.addAttribute("center", c));
+        return "center-details";
     }
 }

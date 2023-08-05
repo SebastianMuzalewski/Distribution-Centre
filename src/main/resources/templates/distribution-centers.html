@@ -131,20 +131,23 @@
 <div class="page">
     <div class="d-flex flex-row mb-3" style="margin-top:15px; margin-left:0px">
         <div class="card ms-3 me-3" th:each="center: ${dbCenters}" style="width: 18rem, height: 18rem">
-            <div class="card-body">
-                <h5 class="card-title" th:text="${center.name}"></h5>
-                <h6 class="card-subtitle mb-2" th:text="|Number of Items: ${center.itemsAvailable}|"></h6>
-                <h6 class="card-subtitle mb-2" th:text="|Latitude: ${center.latitude}|"></h6>
-                <h6 class="card-subtitle mb-2" th:text="|Longitude: ${center.longitude}"></h6>
-                <div th:if="${hasRoleAdmin}">
-                    <form th:action="@{/distribution-centers/delete}" method="post">
-                        <!-- Add a hidden input field to hold the item's ID -->
-                        <input type="hidden" name="id" th:value="${center.id}" />
-                        <!-- Add a button to trigger the delete operation -->
-                        <button class="delete-button" type="submit">Delete</button>
-                    </form>
+
+                <div class="card-body">
+                    <a th:href="@{/distribution-centers/details/{id}(id=${center.id})}">
+                        <h5 class="card-title" th:text="${center.name}"></h5>
+                    </a>
+                    <h6 class="card-subtitle mb-2" th:text="|Number of Items: ${center.itemsAvailable}|"></h6>
+                    <h6 class="card-subtitle mb-2" th:text="|Latitude: ${center.latitude}|"></h6>
+                    <h6 class="card-subtitle mb-2" th:text="|Longitude: ${center.longitude}"></h6>
+                    <div th:if="${hasRoleAdmin}">
+                        <form th:action="@{/distribution-centers/delete}" method="post">
+                            <!-- Add a hidden input field to hold the item's ID -->
+                            <input type="hidden" name="id" th:value="${center.id}" />
+                            <!-- Add a button to trigger the delete operation -->
+                            <button class="delete-button" type="submit">Delete</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
     <ul class="pagination mt-5">
