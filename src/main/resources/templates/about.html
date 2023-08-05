@@ -102,6 +102,9 @@
             <a class="nav-link" th:if="${hasRoleAdmin || hasRoleEmp || hasRoleUser}" th:href="@{/profile}" >
                 <img th:src="@{/images/pngs/navbar/profile.png}" alt="Home Navbar Icon" class="nav-icon-resizer" th:unless="${userRole == null or userRole == 'ROLE_ANONYMOUS'}" /> <span th:text="${username} "></span>
             </a>
+            <a class="nav-link" th:href="@{/distribution-centers}" >
+                <img th:src="@{/images/pngs/navbar/profile.png}" alt="Centers Navbar Icon" class="nav-icon-resizer" /> CENTERS
+            </a>
             <a class="nav-link" th:href="@{/about}">
                 <img th:src="@{/images/pngs/navbar/about.png}" alt="About Navbar Icon" class="nav-icon-resizer" /> ABOUT
             </a>
