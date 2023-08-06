@@ -1,9 +1,6 @@
 package com.deez.distribution_center.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +14,6 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Entity
 public class Item {
     @Id
@@ -32,15 +28,17 @@ public class Item {
 
     private Brand brandFrom;
 
+    @ManyToOne
+    private DistributionCenter distributionCenter;
+
     @Builder.Default
     private LocalDate createdAt = LocalDate.now();
 
-    public enum Brand {
-        BALENCIAGA("Balenciaga"),
-        STONE_ISLAND("Stone Island"),
-        DIOR("Dior"),
+    @Builder.Default
+    private int quantity = 10;
 
-        GUCCI("Gucci");
+    public enum Brand {
+        BALENCIAGA("Balenciaga"), STONE_ISLAND("Stone Island"), DIOR("Dior"), GUCCI("Gucci");
 
         private String title;
 
@@ -51,8 +49,5 @@ public class Item {
             return title;
         }
     }
-
-    @Builder.Default
-    private int quantity = 0;
 
 }

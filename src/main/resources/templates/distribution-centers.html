@@ -118,6 +118,9 @@
             <a class="nav-link" th:href="@{/distribution-centers}" >
                 <img th:src="@{/images/pngs/navbar/profile.png}" alt="Centers Navbar Icon" class="nav-icon-resizer" /> CENTERS
             </a>
+            <a class="nav-link" th:if="${hasRoleAdmin || hasRoleEmp}" th:href="@{/distribution-centers/add-item}" >
+                <img th:src="@{/images/pngs/navbar/profile.png}" alt="Centers Navbar Icon" class="nav-icon-resizer" /> ADD ITEM
+            </a>
             <a class="nav-link" th:href="@{/about}">
                 <img th:src="@{/images/pngs/navbar/about.png}" alt="About Navbar Icon" class="nav-icon-resizer" /> ABOUT
             </a>
@@ -136,7 +139,7 @@
                     <a th:href="@{/distribution-centers/details/{id}(id=${center.id})}">
                         <h5 class="card-title" th:text="${center.name}"></h5>
                     </a>
-                    <h6 class="card-subtitle mb-2" th:text="|Number of Items: ${center.itemsAvailable}|"></h6>
+                    <h6 class="card-subtitle mb-2" th:text="|Number of Items: ${center.itemsAvailable.size()}|"></h6>
                     <h6 class="card-subtitle mb-2" th:text="|Latitude: ${center.latitude}|"></h6>
                     <h6 class="card-subtitle mb-2" th:text="|Longitude: ${center.longitude}"></h6>
                     <div th:if="${hasRoleAdmin}">
