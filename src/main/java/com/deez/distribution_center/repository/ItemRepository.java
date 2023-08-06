@@ -11,6 +11,6 @@ import java.util.List;
 public interface ItemRepository extends CrudRepository<Item, Long> {
     List<Item> findByBrandFrom(Brand brandFrom);
     List<Item> findByName(String name);
-    List<Item> findByNameContainingAndBrandFrom(String name, Brand brandFrom);
+    List<Item> findByNameAndBrandFrom(String name, Brand brandFrom);
 
 }
