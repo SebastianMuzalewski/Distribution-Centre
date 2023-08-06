@@ -125,4 +125,69 @@ public class DistributionCenterController {
         center.ifPresent(c -> model.addAttribute("center", c));
         return "center-details";
     }
+
+    @PostMapping("/delete-item")
+    public String deleteItem(@RequestParam("centerId") Long centerId, @RequestParam("itemId") Long itemId) {
+        // Get the distribution center from the database
+        Optional<DistributionCenter> centerOptional = dbcRepository.findById(centerId);
+
+        if (centerOptional.isPresent()) {
+            DistributionCenter center = centerOptional.get();
+            // Get the list of items available in the distribution center
+            List<Item> itemsAvailable = center.getItemsAvailable();
+
+            // Find the item with the given ID in the list and remove it
+            itemsAvailable.removeIf(item -> item.getId().equals(itemId));
+
+            // Save the updated distribution center
+            dbcRepository.save(center);
+        }
+
+        return "redirect:/distribution-centers/details/" + centerId;
+    }
+
+    @GetMapping("/add-item")
+    public String showAddItemForm(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean hasRoleAdmin = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+        model.addAttribute("hasRoleAdmin", hasRoleAdmin);
+
+        boolean hasRoleEmp = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_EMPLOYEE"));
+        model.addAttribute("hasRoleEmp", hasRoleEmp);
+
+        boolean hasRoleUser = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_USER"));
+        model.addAttribute("hasRoleUser", hasRoleUser);
+
+        String userRole = null;
+        String username = null;
+        if (authentication != null && !authentication.getAuthorities().isEmpty()) {
+            userRole = authentication.getAuthorities().iterator().next().getAuthority();
+            username = authentication.getName();
+        }
+        model.addAttribute("userRole", userRole);
+        model.addAttribute("username", username);
+        var dbCenters = dbcRepository.findAll();
+        model.addAttribute("dbCenters", dbCenters);
+        return "add-item";
+    }
+
+    @PostMapping("/add-item")
+    public String addItem(@ModelAttribute Item newItem, @RequestParam("center") Long centerId) {
+        Optional<DistributionCenter> centerOptional = dbcRepository.findById(centerId);
+
+        if (centerOptional.isPresent()) {
+            DistributionCenter center = centerOptional.get();
+            List<Item> itemsAvailable = center.getItemsAvailable();
+            itemsAvailable.add(newItem);
+            center.setItemsAvailable(itemsAvailable);
+            dbcRepository.save(center);
+        }
+
+        return "redirect:/distribution-centers";
+    }
+
 }
