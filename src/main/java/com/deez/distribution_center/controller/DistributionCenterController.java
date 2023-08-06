@@ -5,6 +5,8 @@ import com.deez.distribution_center.model.Item;
 import com.deez.distribution_center.model.dto.DBCentersDto;
 import com.deez.distribution_center.repository.DBCRepository;
 import com.deez.distribution_center.repository.DBCRepositoryPaginated;
+import com.deez.distribution_center.repository.ItemRepository;
+import com.deez.distribution_center.repository.ItemRepositoryPaginated;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,8 +23,9 @@ import java.util.Optional;
 public class DistributionCenterController {
     private static final int PAGE_SIZE = 5;
     private DBCRepository dbcRepository;
-
     private DBCRepositoryPaginated dbcRepositoryPaginated;
+    private ItemRepository itemRepository;
+    private ItemRepositoryPaginated itemRepositoryPaginated;
 
     public DistributionCenterController(DBCRepository dbcRepository,
                                         DBCRepositoryPaginated dbcRepositoryPaginated) {
@@ -193,4 +197,86 @@ public class DistributionCenterController {
         return "redirect:/distribution-centers";
     }
 
+
+    @GetMapping("/search-item")
+    public String showSearchItemForm(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean hasRoleAdmin = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+        model.addAttribute("hasRoleAdmin", hasRoleAdmin);
+
+        boolean hasRoleEmp = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_EMPLOYEE"));
+        model.addAttribute("hasRoleEmp", hasRoleEmp);
+
+        boolean hasRoleUser = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_USER"));
+        model.addAttribute("hasRoleUser", hasRoleUser);
+
+        String userRole = null;
+        String username = null;
+        if (authentication != null && !authentication.getAuthorities().isEmpty()) {
+            userRole = authentication.getAuthorities().iterator().next().getAuthority();
+            username = authentication.getName();
+        }
+        model.addAttribute("userRole", userRole);
+        model.addAttribute("username", username);
+
+        List<DistributionCenter> centersWithMatchingItems = new ArrayList<>();
+        model.addAttribute("centersWithMatchingItems", centersWithMatchingItems);
+
+        var dbCenters = dbcRepository.findAll();
+        model.addAttribute("dbCenters", dbCenters);
+        return "search-item";
+    }
+
+    @PostMapping("/search-item")
+    public String searchItem(@RequestParam("name") String name, @RequestParam("brandFrom") Item.Brand brand, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean hasRoleAdmin = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+        model.addAttribute("hasRoleAdmin", hasRoleAdmin);
+
+        boolean hasRoleEmp = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_EMPLOYEE"));
+        model.addAttribute("hasRoleEmp", hasRoleEmp);
+
+        boolean hasRoleUser = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_USER"));
+        model.addAttribute("hasRoleUser", hasRoleUser);
+
+        String userRole = null;
+        String username = null;
+        if (authentication != null && !authentication.getAuthorities().isEmpty()) {
+            userRole = authentication.getAuthorities().iterator().next().getAuthority();
+            username = authentication.getName();
+        }
+        model.addAttribute("userRole", userRole);
+        model.addAttribute("username", username);
+
+        List<DistributionCenter> centersWithMatchingItems = new ArrayList<>();
+
+        var dbCenters = dbcRepository.findAll();
+
+        for (DistributionCenter center : dbCenters) {
+            boolean hasMatchingItems = false;
+
+            // Loop through the items in the center and check for matches
+            for (Item item : center.getItemsAvailable()) {
+                if (item.getName().equalsIgnoreCase(name) && item.getBrandFrom() == brand) {
+                    hasMatchingItems = true;
+                    break;
+                }
+            }
+
+            if (hasMatchingItems) {
+                centersWithMatchingItems.add(center);
+            }
+        }
+
+        model.addAttribute("centersWithMatchingItems", centersWithMatchingItems);
+        return "search-item";
+    }
 }
