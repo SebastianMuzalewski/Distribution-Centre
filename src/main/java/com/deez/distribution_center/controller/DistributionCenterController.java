@@ -46,7 +46,7 @@ public class DistributionCenterController {
     public String searchByName(@ModelAttribute DBCentersDto dbCentersDto, Model model) {
         var name = dbCentersDto.getName();
 
-//            model.addAttribute("dbCenters", DBCRepository.DBCFindByName(name));
+            model.addAttribute("dbCenters", dbcRepository.findByName(name));
 
         return "distribution-centers";
     }
