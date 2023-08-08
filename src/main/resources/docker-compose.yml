@@ -1,0 +1,14 @@
+version: '3'
+services:
+  postgres-qa:
+    image: postgres
+    container_name: mypostgresdb-qa
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - "5432:5432"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
