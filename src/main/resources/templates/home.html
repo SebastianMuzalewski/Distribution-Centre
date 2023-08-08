@@ -20,6 +20,7 @@
             align-items: center;
             padding: 0;
             overflow: hidden;
+            position: fixed;
         }
         .nav-title {
             background-color: #2c2c2c;
@@ -67,6 +68,7 @@
         .footer-config {
             left: 0;
             bottom: 0;
+            right: 0;
             width: 10%;
             background-color: #2c2c2c;
             position: fixed;
@@ -86,6 +88,46 @@
             color: #FFFFFF;
             padding-bottom: 20px;
         }
+        /* Main Page */
+        .main-content {
+            position: relative;
+            margin-left: 10%;
+            margin-right: 0;
+            padding: 0;
+            width: calc(100% - 10%);
+            overflow: auto;
+            height: 100%;
+        }
+        .centers-icon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        html, body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            overflow: auto;
+            position: relative;
+        }
+         .welcome-banner {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            text-align: Left;
+            z-index: 1;
+            color: #FFFFFF;
+        }
+        .welcome-banner .title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .welcome-banner .subtitle {
+            font-size: 16px;
+        }
     </style>
 </head>
 <div class="container-fluid">
@@ -102,6 +144,15 @@
             <a class="nav-link" th:if="${hasRoleAdmin || hasRoleEmp || hasRoleUser}" th:href="@{/profile}" >
                 <img th:src="@{/images/pngs/navbar/profile.png}" alt="Home Navbar Icon" class="nav-icon-resizer" th:unless="${userRole == null or userRole == 'ROLE_ANONYMOUS'}" /> <span th:text="${username} "></span>
             </a>
+            <a class="nav-link" th:href="@{/distribution-centers}" >
+                <img th:src="@{/images/pngs/navbar/center.png}" alt="Centers Navbar Icon" class="nav-icon-resizer" /> CENTERS
+            </a>
+            <a class="nav-link" th:if="${hasRoleAdmin || hasRoleEmp}" th:href="@{/distribution-centers/add-item}" >
+                <img th:src="@{/images/pngs/navbar/add_item.png}" alt="Centers Navbar Icon" class="nav-icon-resizer" /> ADD ITEM
+            </a>
+            <a class="nav-link" th:href="@{/distribution-centers/search-item}" >
+                <img th:src="@{/images/pngs/navbar/add_item.png}" alt="Centers Navbar Icon" class="nav-icon-resizer" /> SEARCH ITEMS
+            </a>
             <a class="nav-link" th:href="@{/about}">
                 <img th:src="@{/images/pngs/navbar/about.png}" alt="About Navbar Icon" class="nav-icon-resizer" /> ABOUT
             </a>
@@ -111,7 +162,14 @@
         </div>
     </div>
 </div>
-<body>
+<body style="margin: 0; padding: 0;">
+    <div class="main-content">
+        <div class="welcome-banner">
+            <div class="title">Welcome to the Distribution Center!</div>
+            <div class="subtitle">Our centers are located all across the GTA</div>
+        </div>
+        <img th:src="@{/images/pngs/homepage/centersIsland.png}" alt="Centers png" class="centers-icon"/>
+    </div>
 </body>
 <footer class="footer-config">
     <div class="footer-description">&copy;2023 Distribution Center. All rights reserved lol.</div>
