@@ -94,8 +94,6 @@
         }
 
         header, main {
-            display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
@@ -105,6 +103,13 @@
             background-color: #FFFFFF;
         }
 
+        main {
+            transform: translateY(-120%);
+        }
+
+        header {
+            transform: translateY(-705%);
+        }
 
         .team-member {
             display: flex;
@@ -116,59 +121,16 @@
              flex-grow: 1;
              padding: 20px;
         }
-        .body {
+        body {
             overflow: hidden;
             background-color:  hsl(0, 0%, 40%);;
         }
-
     </style>
 </head>
-<body style="background-color: #f0f0f0;">
-<header>
-    <h1>About Us</h1>
-    <p>Welcome to our company</p>
-</header>
-<main>
-    <h1>Our Story</h1>
-    <p>Our Distribution Center enables users to browse and add items from their favorite designer brands.
-        Additionally, it provides real-time information about the price, quantity, and stock availability
-        across all GTA warehouses. Furthermore,the system offers longitude and latitude data for each
-        warehouse location.</p>
-    <div class="team-member">
-        <i class="fa fa-address-card" style="font-size:48px;color:red"></i>
-        <h3>Sebastian Muzalewski </h3>
-        <p>Co-founder</p>
-    </div>
-    <div class="team-member">
-        <i class="fa fa-address-card" style="font-size:48px;color:red"></i>
-        <h3>Eilaf Ajundi</h3>
-        <p>Co-founder</p>
-    </div>
-    <div class="team-member">
-        <i class="fa fa-address-card" style="font-size:48px;color:red"></i>
-        <h3>Micheal Policelli </h3>
-        <p>Lead Developer</p>
-    </div>
-    <div class="team-member">
-        <i class="fa fa-address-card" style="font-size:48px;color:red"></i>
-        <h3>Kalid Musse </h3>
-        <p>Senior Developer</p>
-    </div>
-
-</main>
-<footer class="footer-config">
-        <footer class="footer-config">
-            <div class="footer-description">&copy;2023 Distribution Center. All rights reserved.</div>
-            <a href="https://github.com/SebastianMuzalewski/Distribution-Centre">
-                <img src="/images/pngs/footer/github.png" alt="GitHub png" class="gitHub-icon"/>
-            </a>
-        </footer>
-    </footer>
-
-
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12 col-md-2 nav-bar"><div class="nav-title"><img th:src="@{/images/pngs/navbar/distribution-center.png}" alt="Distribution Center png" class="nav-icon-title-resizer" /> Distribution Center </div>
+        <div class="col-12 col-md-2 nav-bar">
+            <div class="nav-title"><img th:src="@{/images/pngs/navbar/distribution-center.png}" alt="Distribution Center png" class="nav-icon-title-resizer" /> Distribution Center </div>
             <!-- home.html -->
             <a class="nav-link" th:href="@{/home}">
                 <img th:src="@{/images/pngs/navbar/home.png}" alt="Home Navbar Icon" class="nav-icon-resizer" /> HOME
@@ -197,6 +159,38 @@
         </div>
     </div>
 </div>
+<body>
+<header>
+    <h1>About Us</h1>
+    <p>Welcome to our company</p>
+</header>
+<main style="background-color: #f0f0f0;">
+    <h1>Our Story</h1>
+    <p>Our Distribution Center enables users to browse and add items from their favorite designer brands.
+        Additionally, it provides real-time information about the price, quantity, and stock availability
+        across all GTA warehouses. Furthermore,the system offers longitude and latitude data for each
+        warehouse location.</p>
+    <div class="team-member">
+        <i class="fa fa-address-card" style="font-size:48px;color:red"></i>
+        <h3>Sebastian Muzalewski </h3>
+        <p>Co-founder</p>
+    </div>
+    <div class="team-member">
+        <i class="fa fa-address-card" style="font-size:48px;color:red"></i>
+        <h3>Eilaf Ajundi</h3>
+        <p>Co-founder</p>
+    </div>
+    <div class="team-member">
+        <i class="fa fa-address-card" style="font-size:48px;color:red"></i>
+        <h3>Micheal Policelli </h3>
+        <p>Lead Developer</p>
+    </div>
+    <div class="team-member">
+        <i class="fa fa-address-card" style="font-size:48px;color:red"></i>
+        <h3>Kalid Musse </h3>
+        <p>Senior Developer</p>
+    </div>
+</main>
 </body>
 <footer class="footer-config">
     <div class="footer-description">&copy;2023 Distribution Center. All rights reserved lol.</div>
