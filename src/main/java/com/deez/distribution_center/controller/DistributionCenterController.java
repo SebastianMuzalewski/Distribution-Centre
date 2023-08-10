@@ -88,15 +88,35 @@ public class DistributionCenterController {
     }
 
     @GetMapping("/switchPage")
-    public String switchPage(Model model,
-                             @RequestParam("pageToSwitch") Optional<Integer> pageToSwitch) {
+    public String switchPage(Model model, @RequestParam("pageToSwitch") Optional<Integer> pageToSwitch) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean hasRoleAdmin = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+        model.addAttribute("hasRoleAdmin", hasRoleAdmin);
+
+        boolean hasRoleEmp = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_EMPLOYEE"));
+        model.addAttribute("hasRoleEmp", hasRoleEmp);
+
+        boolean hasRoleUser = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_USER"));
+        model.addAttribute("hasRoleUser", hasRoleUser);
+
+        String userRole = null;
+        String username = null;
+        if (authentication != null && !authentication.getAuthorities().isEmpty()) {
+            userRole = authentication.getAuthorities().iterator().next().getAuthority();
+            username = authentication.getName();
+        }
+        model.addAttribute("userRole", userRole);
+        model.addAttribute("username", username);
         var page = pageToSwitch.orElse(0);
         var totalPages = (int) model.getAttribute("totalPages");
         if (page < 0 || page >= totalPages) {
             return "distribution-centers";
         }
-        var dbcPage = dbcRepositoryPaginated.findAll(PageRequest.of(pageToSwitch.orElse(0),
-                PAGE_SIZE));
+        var dbcPage = dbcRepositoryPaginated.findAll(PageRequest.of(pageToSwitch.orElse(0), PAGE_SIZE));
         model.addAttribute("dbCenters", dbcPage.getContent());
         model.addAttribute("currentPage", dbcPage.getNumber());
         return "distribution-centers";
@@ -157,7 +177,7 @@ public class DistributionCenterController {
         return "redirect:/distribution-centers/details/" + centerId;
     }
 
-    @GetMapping("/order-item")
+    @GetMapping("/add-item")
     public String showOrderItemForm(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -183,8 +203,24 @@ public class DistributionCenterController {
         model.addAttribute("username", username);
         var dbCenters = dbcRepository.findAll();
         model.addAttribute("dbCenters", dbCenters);
-        return "order-item";
+        return "add-item";
     }
+
+    @PostMapping("/add-item")
+    public String addItem(@ModelAttribute Item newItem, @RequestParam("center") Long centerId) {
+            Optional<DistributionCenter> centerOptional = dbcRepository.findById(centerId);
+
+            if (centerOptional.isPresent()) {
+                DistributionCenter center = centerOptional.get();
+                List<Item> itemsAvailable = center.getItemsAvailable();
+                itemsAvailable.add(newItem);
+
+                center.setItemsAvailable(itemsAvailable);
+                dbcRepository.save(center);
+            }
+
+            return "redirect:/distribution-centers/details/" + centerId;
+        }
 
     @PostMapping("/order-item")
     public String orderItem(@RequestParam("centerId") Long centerId, @RequestParam("itemId") Long itemId) {

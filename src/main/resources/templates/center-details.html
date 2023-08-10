@@ -87,6 +87,15 @@
             color: #FFFFFF;
             padding-bottom: 20px;
         }
+        .order-button {
+            background-color: #268a15;
+            color: #FFFFFF;
+            height: 30px;
+            width: 90px;
+            border-radius: 7px;
+            font-weight: bold;
+            border: #FFFFFF;
+        }
         .delete-button {
             background-color: #de2500;
             color: #FFFFFF;
@@ -110,7 +119,7 @@
         }
         .page {
             position: absolute;
-            top: 10%;
+            top: 5%;
             left: 20%;
         }
         .back {
@@ -212,7 +221,7 @@
                 <!-- Add a hidden input field for item.id -->
                 <input type="hidden" name="itemId" th:value="${item.id}" />
                 <!-- Add a button to trigger the delete operation -->
-                <button class="btn btn-success" type="submit">Order</button>
+                <button class="order-button" type="submit">Order</button>
               </form>
               <form th:action="@{/distribution-centers/delete-item}" method="post">
                 <!-- Add a hidden input field for center.id -->

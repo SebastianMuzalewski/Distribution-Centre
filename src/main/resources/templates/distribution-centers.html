@@ -195,13 +195,13 @@
     <div id="pagination-container" class="d-flex justify-content-center">
         <ul class="pagination mt-5">
             <li class="page-item">
-                <a class="page-link" th:href="@{/distribution-centers/switchPage(pageToSwitch=${currentPage - 1}, sortBy=${(param.sortBy != null) ? param.sortBy : ''})}">Previous</a>
+                <a class="page-link" th:href="@{/distribution-centers/switchPage(pageToSwitch=${currentPage - 1})}">Previous</a>
             </li>
             <li th:classappend="${currentPage + 1 eq page} ? 'active' : 'not'" th:each="page: ${#numbers.sequence(1, totalPages)}" class="page-item">
-                <a class="page-link" th:text="${page}" th:href="@{/distribution-centers/switchPage(pageToSwitch=${page - 1}, sortBy=${(param.sortBy != null) ? param.sortBy : ''})}"></a>
+                <a class="page-link" th:text="${page}" th:href="@{/distribution-centers/switchPage(pageToSwitch=${page - 1})}"></a>
             </li>
             <li class="page-item">
-                <a class="page-link" th:href="@{/distribution-centers/switchPage(pageToSwitch=${currentPage + 1}, sortBy=${(param.sortBy != null) ? param.sortBy : ''})}">Next</a>
+                <a class="page-link" th:href="@{/distribution-centers/switchPage(pageToSwitch=${currentPage + 1})}">Next</a>
             </li>
         </ul>
     </div>
