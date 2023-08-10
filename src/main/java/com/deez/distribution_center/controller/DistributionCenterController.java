@@ -157,8 +157,8 @@ public class DistributionCenterController {
         return "redirect:/distribution-centers/details/" + centerId;
     }
 
-    @GetMapping("/add-item")
-    public String showAddItemForm(Model model) {
+    @GetMapping("/order-item")
+    public String showOrderItemForm(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         boolean hasRoleAdmin = authentication != null && authentication.getAuthorities().stream()
@@ -183,24 +183,44 @@ public class DistributionCenterController {
         model.addAttribute("username", username);
         var dbCenters = dbcRepository.findAll();
         model.addAttribute("dbCenters", dbCenters);
-        return "add-item";
+        return "order-item";
     }
 
-    @PostMapping("/add-item")
-    public String addItem(@ModelAttribute Item newItem, @RequestParam("center") Long centerId) {
+    @PostMapping("/order-item")
+    public String orderItem(@RequestParam("centerId") Long centerId, @RequestParam("itemId") Long itemId) {
         Optional<DistributionCenter> centerOptional = dbcRepository.findById(centerId);
 
         if (centerOptional.isPresent()) {
             DistributionCenter center = centerOptional.get();
             List<Item> itemsAvailable = center.getItemsAvailable();
-            itemsAvailable.add(newItem);
+
+            Optional<Item> existingItemOptional = itemsAvailable.stream()
+                    .filter(item -> item.getId().equals(itemId))
+                    .findFirst();
+
+            if (existingItemOptional.isPresent()) {
+                Item existingItem = existingItemOptional.get();
+                if (existingItem.getQuantity() > 0) {
+                    int updatedQuantity = existingItem.getQuantity() - 1;
+                    existingItem.setQuantity(updatedQuantity);
+                } else {
+                    return "redirect:/error-page-cannot-order";
+                }
+
+            } else {
+                Item newItem = itemRepository.findById(itemId).orElse(null);
+                if (newItem != null) {
+                    newItem.setQuantity(1);
+                    itemsAvailable.add(newItem);
+                }
+            }
+
             center.setItemsAvailable(itemsAvailable);
             dbcRepository.save(center);
         }
 
-        return "redirect:/distribution-centers";
+        return "redirect:/distribution-centers/details/" + centerId;
     }
-
 
     @GetMapping("/search-item")
     public String showSearchItemForm(Model model) {
