@@ -9,7 +9,7 @@
   <link rel="icon" th:href="@{/images/icons/add_item.ico}" type="image/x-icon">
   <title>Search Items</title>
   <style>
-        /***** Nav-Bar *****/
+        /* Nav-Bar */
         .nav-bar {
             background-color: #333;
             border: 5px solid #808080;
@@ -64,28 +64,18 @@
             align-items: center;
             margin-right: 10px;
         }
-        /***** Footer *****/
-        .footer-config {
-            left: 0;
-            bottom: 0;
-            width: 10%;
-            background-color: #2c2c2c;
-            position: fixed;
-            text-align: center;
-            border: 5px solid #808080;
-            padding: 20px;
+       /* Main Page */
+        body {
+            overflow: hidden;
+            background-color:  hsl(0, 0%, 40%);;
         }
-        .gitHub-icon{
-            width: 30px;
-            height: 30px;
-            bottom: 0;
+        .page {
             position: absolute;
-            transform: translateX(-50%);
+            top: 10%;
+            left: 20%;
         }
-        .footer-description{
-            font-size: 10px;
-            color: #FFFFFF;
-            padding-bottom: 20px;
+        .spacing-td {
+            padding-left: 20px;
         }
         .delete-button {
             background-color: #DC3545;
@@ -93,11 +83,6 @@
             width: 90px;
             border-radius: 7px;
             font-weight: bold;
-        }
-        .page {
-            position: absolute;
-            top: 10%;
-            left: 20%;
         }
         .back {
             background-color: #333;
@@ -124,9 +109,31 @@
         a, a:hover, a:focus, a:active {
              text-decoration: none;
         }
-        body {
-            overflow: hidden;
-            background-color:  hsl(0, 0%, 40%);;
+        .container {
+            color: #FFFFFF;
+        }
+        /* Footer */
+        .footer-config {
+            left: 0;
+            bottom: 0;
+            width: 10%;
+            background-color: #2c2c2c;
+            position: fixed;
+            text-align: center;
+            border: 5px solid #808080;
+            padding: 20px;
+        }
+        .gitHub-icon{
+            width: 30px;
+            height: 30px;
+            bottom: 0;
+            position: absolute;
+            transform: translateX(-50%);
+        }
+        .footer-description{
+            font-size: 10px;
+            color: #FFFFFF;
+            padding-bottom: 20px;
         }
     </style>
 </head>
@@ -134,7 +141,6 @@
   <div class="row">
     <div class="col-12 col-md-2 nav-bar">
       <div class="nav-title"><img th:src="@{/images/pngs/navbar/distribution-center.png}" alt="Distribution Center png" class="nav-icon-title-resizer" /> Distribution Center </div>
-      <!-- home.html -->
       <a class="nav-link" th:href="@{/home}">
         <img th:src="@{/images/pngs/navbar/home.png}" alt="Home Navbar Icon" class="nav-icon-resizer" /> HOME
       </a>
@@ -194,28 +200,28 @@
 <!--        </ul>-->
 <!--      </div>-->
       <div th:if="${centersWithMatchingItems.size() > 0}">
-        <h3>Centers with Matching Items:</h3>
+        <h5>Centers with Matching Items:</h5>
         <table>
           <thead>
           <tr>
             <th>Name</th>
-            <th>Distance (km)</th>
+            <th class="spacing-td">Distance (km)</th>
           </tr>
           </thead>
           <tbody>
           <tr th:each="center : ${centersWithMatchingItems}">
             <td>
-              <a th:href="@{/distribution-centers/details/{id}(id=${center.id})}">
+              <a th:href="@{/distribution-centers/details/{id}(id=${center.id})}" style="color: #de2500;" onmouseover="this.style.color='#FFFFFF';" onmouseout="this.style.color='#de2500';">
                 <span th:text="${center.name}"></span>
               </a>
             </td>
-            <td th:text="  ${center.distance}"></td>
+            <td th:text="  ${center.distance}" class="spacing-td"></td>
           </tr>
           </tbody>
         </table>
       </div>
       <div th:if="${centersWithMatchingItems.size() == 0}">
-        <p>No centers found with matching items.</p>
+        <p style="color: #de2500" >No centers found with matching items.</p>
       </div>
     </div>
   </div>

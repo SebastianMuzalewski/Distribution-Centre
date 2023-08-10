@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Home Page</title>
+    <title>Profile Page</title>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
     <link rel="icon" th:href="@{/images/icons/profile.ico}" type="image/x-icon">
     <style>
-    /* Nav-Bar */
-    @media (max-width: 3000px){
+        /* Nav-Bar */
+        @media (max-width: 3000px){
         .nav-bar {
             background-color: #333;
             border: 5px solid #808080;
@@ -64,11 +64,12 @@
             align-items: center;
             margin-right: 10px;
         }
-    /* Body | Profile Img */
-        body{
+        /* Main Page */
+        body {
             overflow: hidden;
-            background-color:  hsl(0, 0%, 40%);;
+            background-color:  hsl(0, 0%, 40%);
         }
+        /** Profile Image **/
         .display-profile {
             display: flex;
             justify-content: center;
@@ -93,8 +94,18 @@
             top: -75%;
             left: 22%;
         }
+        /** Center-line **/
+        .center-line {
+            position: absolute;
+            top: 20%;
+            left: 53%;
+            width: 2px;
+            height: 50%;
+            background-color: #de2500;
+        }
+        /** Information Table **/
         .display-information{
-           display: flex;
+            display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -122,21 +133,6 @@
         }
         .information td:first-child {
             border-left: none;
-        }
-        .center-line {
-            position: absolute;
-            top: 20%;
-            left: 53%;
-            width: 2px;
-            height: 50%;
-            background-color: #de2500;
-        }
-         .title-info {
-            margin-top: 10px;
-            color: #de2500;
-            font-weight: bold;
-            font-size: 18px;
-            align-self: flex-start;
         }
         /* Footer */
         .footer-config {

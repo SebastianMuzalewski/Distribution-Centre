@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+  <title>Add Item</title>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
   <link rel="icon" th:href="@{/images/icons/add_item.ico}" type="image/x-icon">
-  <title>Add Item</title>
   <style>
-        /***** Nav-Bar *****/
+        /* Nav-Bar */
         .nav-bar {
             background-color: #333;
             border: 5px solid #808080;
@@ -64,7 +64,46 @@
             align-items: center;
             margin-right: 10px;
         }
-        /***** Footer *****/
+        /* Main Page */
+        .page {
+            position: absolute;
+            top: 10%;
+            left: 20%;
+        }
+        body {
+            overflow: hidden;
+            background-color:  hsl(0, 0%, 40%);;
+        }
+        .container {
+          color: #FFFFFF;
+        }
+        .add-item {
+            background-color: #de2500;
+            color: white;
+            font-weight: bold;
+            height: 40px;
+            width: 100px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .add-item:hover {
+            background-color: #FFFFFF;
+            color: #de2500;
+            font-weight: bold;
+            height: 40px;
+            width: 100px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        a, a:hover, a:focus, a:active {
+             text-decoration: none;
+        }
+
+        /* Footer */
         .footer-config {
             left: 0;
             bottom: 0;
@@ -87,54 +126,12 @@
             color: #FFFFFF;
             padding-bottom: 20px;
         }
-        .delete-button {
-            background-color: #DC3545;
-            height: 30px;
-            width: 90px;
-            border-radius: 7px;
-            font-weight: bold;
-        }
-        .page {
-            position: absolute;
-            top: 10%;
-            left: 20%;
-        }
-        .back {
-            background-color: #333;
-            color: white;
-            font-weight: bold;
-            height: 40px;
-            width: 100px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .back:hover {
-            background-color: red;
-            color: black;
-            font-weight: bold;
-            height: 40px;
-            width: 100px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        a, a:hover, a:focus, a:active {
-             text-decoration: none;
-        }
-        body {
-            overflow: hidden;
-            background-color:  hsl(0, 0%, 40%);;
-        }
     </style>
 </head>
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 col-md-2 nav-bar">
       <div class="nav-title"><img th:src="@{/images/pngs/navbar/distribution-center.png}" alt="Distribution Center png" class="nav-icon-title-resizer" /> Distribution Center </div>
-      <!-- home.html -->
       <a class="nav-link" th:href="@{/home}">
         <img th:src="@{/images/pngs/navbar/home.png}" alt="Home Navbar Icon" class="nav-icon-resizer" /> HOME
       </a>
@@ -192,7 +189,7 @@
           <option th:each="center : ${dbCenters}" th:value="${center.id}" th:text="${center.name}"></option>
         </select>
       </div>
-      <button type="submit" class="back">Add Item</button>
+      <button type="submit" class="add-item">Add Item</button>
     </form>
   </div>
 </div>

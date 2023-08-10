@@ -14,7 +14,7 @@ public class ErrorController {
 
     @GetMapping("/error-page-cannot-order")  // Add this mapping
     public String showCustomErrorPage(Model model) {
-        model.addAttribute("errorMessage", "Item quantity is not sufficient.");
+        model.addAttribute("errorMessage", "Item quantity doesn't exist or no more items are available.");
         return "error-page";
     }
 }

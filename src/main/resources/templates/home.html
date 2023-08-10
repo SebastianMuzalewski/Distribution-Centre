@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
     <link rel="icon" th:href="@{/images/icons/home.ico}" type="image/x-icon">
     <style>
-        /***** Nav-Bar *****/
+        /* Nav-Bar */
         .nav-bar {
             background-color: #333;
             border: 5px solid #808080;
@@ -64,7 +64,49 @@
             align-items: center;
             margin-right: 10px;
         }
-        /***** Footer *****/
+        /* Main Page */
+        html, body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            overflow: auto;
+            position: relative;
+        }
+        .main-content {
+            position: relative;
+            margin-left: 10%;
+            margin-right: 0;
+            padding: 0;
+            width: calc(100% - 10%);
+            overflow: auto;
+            height: 100%;
+        }
+        /** Intro Banner **/
+         .welcome-banner {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            text-align: Left;
+            z-index: 1;
+            color: #FFFFFF;
+        }
+        .welcome-banner .title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .welcome-banner .subtitle {
+            font-size: 16px;
+        }
+        /** Centers Image **/
+        .centers-icon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* Footer */
         .footer-config {
             left: 0;
             bottom: 0;
@@ -88,53 +130,12 @@
             color: #FFFFFF;
             padding-bottom: 20px;
         }
-        /* Main Page */
-        .main-content {
-            position: relative;
-            margin-left: 10%;
-            margin-right: 0;
-            padding: 0;
-            width: calc(100% - 10%);
-            overflow: auto;
-            height: 100%;
-        }
-        .centers-icon {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        html, body {
-            padding: 0;
-            margin: 0;
-            height: 100%;
-            overflow: auto;
-            position: relative;
-        }
-         .welcome-banner {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            text-align: Left;
-            z-index: 1;
-            color: #FFFFFF;
-        }
-        .welcome-banner .title {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .welcome-banner .subtitle {
-            font-size: 16px;
-        }
     </style>
 </head>
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 col-md-2 nav-bar">
             <div class="nav-title"><img th:src="@{/images/pngs/navbar/distribution-center.png}" alt="Distribution Center png" class="nav-icon-title-resizer" /> Distribution Center </div>
-            <!-- home.html -->
             <a class="nav-link" th:href="@{/home}">
                 <img th:src="@{/images/pngs/navbar/home.png}" alt="Home Navbar Icon" class="nav-icon-resizer" /> HOME
             </a>

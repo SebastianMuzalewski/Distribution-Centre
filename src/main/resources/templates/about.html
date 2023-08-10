@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Home Page</title>
+    <title>About Page</title>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,12 +9,7 @@
     <link rel="icon" th:href="@{/images/icons/about.ico}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        /* Your existing styles */
- /***** Nav-Bar *****/
-
-        .page-container {
-            display: flex;
-        }
+        /* Nav-Bar */
         .nav-bar {
             background-color: #333;
             border: 5px solid #808080;
@@ -67,9 +62,40 @@
             width: 60px;
             height: 60px;
             align-items: center;
-            margin-right: 30px;
+            margin-right: 10px;
         }
-        /***** Footer *****/
+        /* Main Page */
+        body {
+            overflow: hidden;
+            background-color: #808080;
+        }
+        header, main {
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            margin: auto;
+            max-width: 700px;
+            background-color: #333;
+        }
+        header {
+            transform: translateY(-700%);
+            color: #FFFFFF
+        }
+        main{
+            transform: translateY(-115%);
+        }
+        .team-member {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+       .content {
+             flex-grow: 1;
+             padding: 20px;
+        }
+        /* Footer */
         .footer-config {
             left: 0;
             bottom: 0;
@@ -91,39 +117,6 @@
             font-size: 10px;
             color: #FFFFFF;
             padding-bottom: 20px;
-        }
-
-        header, main {
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-            margin: auto;
-            max-width: 700px;
-            background-color: #FFFFFF;
-        }
-
-        main {
-            transform: translateY(-120%);
-        }
-
-        header {
-            transform: translateY(-705%);
-        }
-
-        .team-member {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px 0;
-        }
-       .content {
-             flex-grow: 1;
-             padding: 20px;
-        }
-        body {
-            overflow: hidden;
-            background-color:  hsl(0, 0%, 40%);;
         }
     </style>
 </head>
