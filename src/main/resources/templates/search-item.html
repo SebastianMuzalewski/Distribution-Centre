@@ -205,9 +205,9 @@
           <tbody>
           <tr th:each="center : ${centersWithMatchingItems}">
             <td>
-            <a th:href="@{/distribution-centers/details/{id}(id=${center.id})}">
-            <span th:text="${center.name}"></span>
-            </a>
+              <a th:href="@{/distribution-centers/details/{id}(id=${center.id})}">
+                <span th:text="${center.name}"></span>
+              </a>
             </td>
             <td th:text="  ${center.distance}"></td>
           </tr>
