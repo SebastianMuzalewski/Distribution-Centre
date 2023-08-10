@@ -206,6 +206,14 @@
             <td th:text="|$${item.price}|"></td>
             <td th:text="${item.quantity}"></td>
             <td th:if="${hasRoleAdmin || hasRoleEmp}">
+              <form th:action="@{/distribution-centers/order-item}" method="post">
+                <!-- Add a hidden input field for center.id -->
+                <input type="hidden" name="centerId" th:value="${center.id}" />
+                <!-- Add a hidden input field for item.id -->
+                <input type="hidden" name="itemId" th:value="${item.id}" />
+                <!-- Add a button to trigger the delete operation -->
+                <button class="btn btn-success" type="submit">Order</button>
+              </form>
               <form th:action="@{/distribution-centers/delete-item}" method="post">
                 <!-- Add a hidden input field for center.id -->
                 <input type="hidden" name="centerId" th:value="${center.id}" />

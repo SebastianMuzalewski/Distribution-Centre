@@ -2,7 +2,7 @@ version: '3'
 services:
   postgres-qa:
     image: postgres
-    container_name: mypostgresdb-qa
+    container_name: distribution_center-postgresdb-qa
     environment:
       POSTGRES_PASSWORD: mysecretpassword
     ports:
