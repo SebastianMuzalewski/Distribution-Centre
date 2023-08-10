@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,9 @@ public class DistributionCenterController {
     private DBCRepositoryPaginated dbcRepositoryPaginated;
     private ItemRepository itemRepository;
     private ItemRepositoryPaginated itemRepositoryPaginated;
+    private double wareHouseLatitude = 43.590709;
+    private double wareHouseLongitude = -79.642140;
+    private double earthRadius = 6371;
 
     public DistributionCenterController(DBCRepository dbcRepository,
                                         DBCRepositoryPaginated dbcRepositoryPaginated) {
@@ -272,9 +276,26 @@ public class DistributionCenterController {
             }
 
             if (hasMatchingItems) {
+                double latDistance = Math.toRadians(center.getLatitude() - wareHouseLatitude);
+                double lonDistance = Math.toRadians(center.getLongitude() - wareHouseLongitude);
+
+                double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                        + Math.cos(Math.toRadians(wareHouseLatitude)) * Math.cos(Math.toRadians(center.getLatitude()))
+                        * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+
+                double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                double distance = earthRadius * c;
+
+                // Round the distance to two decimal places
+                distance = Math.round(distance * 100.0) / 100.0;
+
+                center.setDistance(distance);
                 centersWithMatchingItems.add(center);
             }
         }
+
+        // Sort the centers by distance before adding them to the model
+        centersWithMatchingItems.sort(Comparator.comparing(DistributionCenter::getDistance));
 
         model.addAttribute("centersWithMatchingItems", centersWithMatchingItems);
         return "search-item";

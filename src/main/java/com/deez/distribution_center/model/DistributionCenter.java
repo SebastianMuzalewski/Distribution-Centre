@@ -32,4 +32,7 @@ public class DistributionCenter {
     @DecimalMin(value = "-180.0", message = "Longitude must be greater than or equal to -180.0")
     @DecimalMax(value = "180.0", message = "Longitude must be less than or equal to 180.0")
     private double longitude;
+
+    @Builder.Default
+    private double distance = 0;
 }

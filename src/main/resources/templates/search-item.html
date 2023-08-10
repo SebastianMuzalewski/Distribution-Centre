@@ -185,13 +185,30 @@
 
     <div class="mb-3 mt-5">
       <h2>Search Results</h2>
+<!--      <div th:if="${centersWithMatchingItems.size() > 0}">-->
+<!--        <h3>Centers with Matching Items:</h3>-->
+<!--        <ul>-->
+<!--          <li th:each="center : ${centersWithMatchingItems}">-->
+<!--            <span th:text="${center.name}"></span> - <span th:text="${center.distance}"></span>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
       <div th:if="${centersWithMatchingItems.size() > 0}">
         <h3>Centers with Matching Items:</h3>
-        <ul>
-          <li th:each="center : ${centersWithMatchingItems}">
-            <span th:text="${center.name}"></span> - <span th:text="${center.latitude}"></span>
-          </li>
-        </ul>
+        <table>
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Distance (km)</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="center : ${centersWithMatchingItems}">
+            <td th:text="${center.name}"></td>
+            <td th:text="${center.distance}"></td>
+          </tr>
+          </tbody>
+        </table>
       </div>
       <div th:if="${centersWithMatchingItems.size() == 0}">
         <p>No centers found with matching items.</p>
